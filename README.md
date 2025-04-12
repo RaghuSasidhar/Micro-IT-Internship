@@ -1,2 +1,2 @@
 # project_1
-for my first internship
+My projects during Micro IT Internship
