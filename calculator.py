@@ -1,55 +1,91 @@
-import tkinter as tk
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #calculator {
+            display: inline-block;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        #output {
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: right;
+            padding-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 60px;
+            height: 40px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <input type="text" id="output" readonly>
+        <br>
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button onclick="append('/')">/</button>
+        <br>
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button onclick="append('*')">*</button>
+        <br>
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button onclick="append('-')">-</button>
+        <br>
+        <button onclick="clearOutput()">C</button>
+        <button onclick="append('0')">0</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="append('+')">+</button>
+    </div>
 
-def click(event):
-    text = event.widget.cget("text") if event.widget else event.char  # Handle both button clicks and key presses
-    if text == "=":
-        try:
-            result = str(eval(entry.get()))  # Evaluate the expression
-            entry.delete(0, tk.END)         # Clear the entry field
-            entry.insert(tk.END, result)   # Display the result
-        except Exception as e:
-            entry.delete(0, tk.END)
-            entry.insert(tk.END, "Error")  # Handle invalid inputs
-    elif text == "C":
-        entry.delete(0, tk.END)            # Clear the entry field
-    else:
-        entry.insert(tk.END, text)         # Add the input (button or key) to the entry field
+    <script>
+        const output = document.getElementById('output');
 
-def key_press(event):
-    valid_keys = "0123456789+-*/=C"  # Define valid keys
-    if event.char in valid_keys or event.keysym == "Return":
-        click(event)
+        function append(value) {
+            output.value += value;
+        }
 
-# Set up the main window
-root = tk.Tk()
-root.title("Simple Calculator")
+        function clearOutput() {
+            output.value = '';
+        }
 
-# Create an entry field for user input
-entry = tk.Entry(root, font="Arial 20", bd=10, relief=tk.SUNKEN, justify=tk.RIGHT)
-entry.pack(fill=tk.BOTH, ipadx=8)
-
-# Create button layout
-buttons = [
-    ['7', '8', '9', '/'],
-    ['4', '5', '6', '*'],
-    ['1', '2', '3', '-'],
-    ['C', '0', '=', '+']
-]
-
-# Generate buttons dynamically
-button_frame = tk.Frame(root)
-button_frame.pack()
-
-for row in buttons:
-    frame = tk.Frame(button_frame)
-    frame.pack(side=tk.TOP, fill=tk.BOTH)
-    for btn_text in row:
-        button = tk.Button(frame, text=btn_text, font="Arial 18", height=2, width=5)
-        button.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
-        button.bind("<Button-1>", click)  # Bind click events to buttons
-
-# Bind keyboard keys
-root.bind("<Key>", key_press)
-
-# Run the application
-root.mainloop()
+        function calculate() {
+            try {
+                output.value = eval(output.value);
+            } catch {
+                output.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
